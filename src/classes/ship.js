@@ -2,7 +2,6 @@ export class Ship {
   constructor(length) {
     this._length = length;
     this._numOfHits = 0;
-    this._sunk = false;
   }
 
   get sunk() {
@@ -14,6 +13,7 @@ export class Ship {
   }
 
   isSunk() {
-    if (this._numOfHits === this._length) this._sunk = true;
+    if (this._numOfHits === this._length) return true;
+    return false;
   }
 }
