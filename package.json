@@ -1,5 +1,5 @@
 {
-  "name": "webpack-template",
+  "name": "battleship",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leetbeet/webpack-template.git"
+    "url": "git+https://github.com/leetbeet/battleship.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leetbeet/webpack-template/issues"
+    "url": "https://github.com/leetbeet/battleship/issues"
   },
-  "homepage": "https://github.com/leetbeet/webpack-template#readme",
+  "homepage": "https://github.com/leetbeet/battleship#readme",
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.28.4",
