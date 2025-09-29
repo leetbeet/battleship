@@ -5,18 +5,17 @@ export class Gameboard {
     this._board = Array(10)
       .fill()
       .map(() => Array(10).fill('empty'));
-    this._carrier = new Ship(5);
-    this._battleship = new Ship(4);
-    this._destroyer = new Ship(3);
-    this._submarine = new Ship(3);
-    this._patrolBoat = new Ship(2);
     this._ships = {
-      carrier: [5, this._carrier],
-      battleship: [4, this._battleship],
-      destroyer: [3, this._destroyer],
-      submarine: [3, this._submarine],
-      patrolBoat: [2, this._patrolBoat],
+      carrier: [5, new Ship(5)],
+      battleship: [4, new Ship(4)],
+      destroyer: [3, new Ship(3)],
+      submarine: [3, new Ship(3)],
+      patrolBoat: [2, new Ship(2)],
     };
+  }
+
+  get board() {
+    return this._board;
   }
 
   placeHorizontally(ship, x, y) {
@@ -36,6 +35,7 @@ export class Gameboard {
   }
 
   receiveAttack(x, y) {
+    if (x > 9 || y > 9) throw new Error('Attack is out of bounds.');
     if (this._board[x][y] === 'empty') {
       this._board[x][y] = 'miss';
     } else if (this._board[x][y] !== 'hit' && this._board[x][y] !== 'miss') {

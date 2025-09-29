@@ -2,7 +2,7 @@ import { Gameboard } from '../classes/gameboard';
 
 test('hit method is called when receiveAttack hits a ship', () => {
   const game = new Gameboard();
-  const spy = jest.spyOn(game._battleship, 'hit');
+  const spy = jest.spyOn(game._ships['battleship'][1], 'hit');
 
   game.placeHorizontally('battleship', 3, 4);
   game.receiveAttack(3, 4);
@@ -14,7 +14,7 @@ test('hit method is called when receiveAttack hits a ship', () => {
 
 test('hit method is not called when receiveAttack misses', () => {
   const game = new Gameboard();
-  const spy = jest.spyOn(game._battleship, 'hit');
+  const spy = jest.spyOn(game._ships['battleship'][1], 'hit');
 
   game.placeHorizontally('battleship', 3, 4);
   game.receiveAttack(7, 4);
@@ -26,7 +26,7 @@ test('hit method is not called when receiveAttack misses', () => {
 
 test('hit method is called when receiveAttack hits a vertically placed ship', () => {
   const game = new Gameboard();
-  const spy = jest.spyOn(game._battleship, 'hit');
+  const spy = jest.spyOn(game._ships['battleship'][1], 'hit');
 
   game.placeVertically('battleship', 3, 4);
   game.receiveAttack(3, 7);
