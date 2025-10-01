@@ -21,16 +21,47 @@ export class Gameboard {
   placeHorizontally(ship, x, y) {
     const length = this._ships[ship][0];
     if (x + length > 10) throw new Error('Ship is out of bounds.');
-    for (let i = x; i < x + length; i++) {
-      this._board[i][y] = ship;
+    for (let i = 0; i < length; i++) {
+      if (this.board[i][y] !== 'empty') throw new Error('Cell occupied');
+    }
+
+    for (let i = 0; i < length; i++) {
+      this._board[x + i][y] = ship;
     }
   }
 
   placeVertically(ship, x, y) {
     const length = this._ships[ship][0];
     if (y + length > 10) throw new Error('Ship is out of bounds.');
-    for (let i = y; i < y + length; i++) {
-      this._board[x][i] = ship;
+    for (let i = 0; i < length; i++) {
+      if (this.board[x][y + i] !== 'empty') throw new Error('Cell occupied');
+    }
+
+    for (let i = 0; i < length; i++) {
+      this._board[x][y + i] = ship;
+    }
+  }
+
+  placeAllRandomly() {
+    for (const name of Object.keys(this._ships)) {
+      const MaxRetries = 500;
+      let retries = 0;
+      let x, y;
+      while (retries < MaxRetries) {
+        x = Math.floor(Math.random() * 10);
+        y = Math.floor(Math.random() * 10);
+
+        try {
+          if (Math.random() > 0.5) {
+            this.placeHorizontally(name, x, y);
+          } else {
+            this.placeVertically(name, x, y);
+          }
+          break;
+        } catch {
+          retries++;
+        }
+      }
     }
   }
 
