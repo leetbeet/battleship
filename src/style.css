@@ -3,3 +3,41 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.boards {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  padding-top: 150px;
+}
+
+.board1,
+.board2 {
+  height: 320px;
+  width: 320px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border: 1px solid black;
+}
+
+.board1 > *,
+.board2 > * {
+  position: relative;
+  border: 1px solid black;
+}
+
+.boards p {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
