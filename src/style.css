@@ -53,3 +53,7 @@ h1 {
 .hit {
   background-color: red;
 }
+
+.blur {
+  opacity: 0.75;
+}

@@ -6,3 +6,6 @@ const game = new GameController(
   document.querySelector('.board1'),
   document.querySelector('.board2')
 );
+
+game.createBoards();
+game.initBoards();

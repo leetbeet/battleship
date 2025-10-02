@@ -2,16 +2,14 @@ import { Player, Computer } from './player';
 
 export class GameController {
   constructor(name, board1, board2) {
-    this._board1 = document.querySelector(board1);
-    this._board2 = document.querySelector(board2);
+    this._board1 = board1;
+    this._board2 = board2;
     this._player1 = new Player(name);
     this._player2 = new Computer();
-
-    this._createBoards();
-    this._initBoards();
+    this._player1Turn = true;
   }
 
-  _createBoards() {
+  createBoards() {
     for (let i = 0; i < 100; i++) {
       const cell1 = document.createElement('div');
       const cell2 = document.createElement('div');
@@ -20,7 +18,7 @@ export class GameController {
     }
   }
 
-  _initBoards() {
+  initBoards() {
     this._player1.gameboard.placeAllRandomly();
     this._player2.gameboard.placeAllRandomly();
 
@@ -32,8 +30,12 @@ export class GameController {
         const k = i + j * 10;
 
         cells2[k].addEventListener('click', () => {
-          this._player1.attack(this._player2, i, j);
-          this.reRenderBoard(this._player2, this._board2);
+          if (!this._player1Turn) return;
+
+          this.playTurn(i, j);
+          setTimeout(() => {
+            this.playTurn();
+          }, 500);
         });
 
         if (this._player1.gameboard.board[i][j] !== 'empty') {
@@ -60,6 +62,35 @@ export class GameController {
             cells[k].className = 'hit';
             break;
         }
+      }
+    }
+  }
+
+  playTurn(x = null, y = null) {
+    if (this._player1Turn) {
+      if (
+        !x ||
+        !y ||
+        this._player2.gameboard.board[x][y] === 'miss' ||
+        this._player2.gameboard.board[x][y] === 'hit'
+      )
+        return;
+      this._board2.classList.add('blur');
+      this._player1.attack(this._player2, x, y);
+      this.reRenderBoard(this._player2, this._board2);
+      this._player1Turn = false;
+
+      if (this._player2.gameboard.isAllSunk()) {
+        alert(`${this._player1.name} has won`);
+      }
+    } else {
+      this._board2.classList.remove('blur');
+      this._player2.attack(this._player1);
+      this.reRenderBoard(this._player1, this._board1);
+      this._player1Turn = true;
+
+      if (this._player1.gameboard.isAllSunk()) {
+        alert(`${this._player2.name} has won`);
       }
     }
   }
