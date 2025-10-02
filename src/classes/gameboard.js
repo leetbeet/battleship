@@ -22,7 +22,7 @@ export class Gameboard {
     const length = this._ships[ship][0];
     if (x + length > 10) throw new Error('Ship is out of bounds.');
     for (let i = 0; i < length; i++) {
-      if (this.board[i][y] !== 'empty') throw new Error('Cell occupied');
+      if (this.board[x + i][y] !== 'empty') throw new Error('Cell occupied');
     }
 
     for (let i = 0; i < length; i++) {
