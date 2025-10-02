@@ -35,7 +35,7 @@ export class GameController {
           this.playTurn(i, j);
           setTimeout(() => {
             this.playTurn();
-          }, 500);
+          }, 300);
         });
 
         if (this._player1.gameboard.board[i][j] !== 'empty') {
@@ -69,8 +69,7 @@ export class GameController {
   playTurn(x = null, y = null) {
     if (this._player1Turn) {
       if (
-        !x ||
-        !y ||
+        x === null ||
         this._player2.gameboard.board[x][y] === 'miss' ||
         this._player2.gameboard.board[x][y] === 'hit'
       )
@@ -81,7 +80,9 @@ export class GameController {
       this._player1Turn = false;
 
       if (this._player2.gameboard.isAllSunk()) {
-        alert(`${this._player1.name} has won`);
+        setTimeout(() => {
+          alert(`${this._player1.name} has won`);
+        }, 0);
       }
     } else {
       this._board2.classList.remove('blur');
@@ -90,7 +91,9 @@ export class GameController {
       this._player1Turn = true;
 
       if (this._player1.gameboard.isAllSunk()) {
-        alert(`${this._player2.name} has won`);
+        setTimeout(() => {
+          alert(`${this._player2.name} has won`);
+        }, 0);
       }
     }
   }
