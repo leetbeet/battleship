@@ -21,8 +21,21 @@ export class Gameboard {
   placeHorizontally(ship, x, y) {
     const length = this._ships[ship][0];
     if (x + length > 10) throw new Error('Ship is out of bounds.');
+
+    // check the cells and their neighbors
     for (let i = 0; i < length; i++) {
-      if (this.board[x + i][y] !== 'empty') throw new Error('Cell occupied');
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const nx = x + i + dx;
+          const ny = y + dy;
+
+          if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
+            if (this._board[nx][ny] !== 'empty') {
+              throw new Error('Cell or neighbor occupied');
+            }
+          }
+        }
+      }
     }
 
     for (let i = 0; i < length; i++) {
@@ -33,8 +46,21 @@ export class Gameboard {
   placeVertically(ship, x, y) {
     const length = this._ships[ship][0];
     if (y + length > 10) throw new Error('Ship is out of bounds.');
+
+    // check the cells and their neighbors
     for (let i = 0; i < length; i++) {
-      if (this.board[x][y + i] !== 'empty') throw new Error('Cell occupied');
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const nx = x + dx;
+          const ny = y + i + dy;
+
+          if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
+            if (this._board[nx][ny] !== 'empty') {
+              throw new Error('Cell or neighbor occupied');
+            }
+          }
+        }
+      }
     }
 
     for (let i = 0; i < length; i++) {
