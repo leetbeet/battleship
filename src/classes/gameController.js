@@ -16,6 +16,9 @@ export class GameController {
       this._board1.appendChild(cell1);
       this._board2.appendChild(cell2);
     }
+
+    document.querySelector('.output-msg').textContent =
+      `${this._player1._name}'s turn`;
   }
 
   initBoards() {
@@ -67,13 +70,16 @@ export class GameController {
   }
 
   playTurn(x = null, y = null) {
+    const outputMsg = document.querySelector('.output-msg');
     if (this._player1Turn) {
       if (
         x === null ||
         this._player2.gameboard.board[x][y] === 'miss' ||
-        this._player2.gameboard.board[x][y] === 'hit'
+        this._player2.gameboard.board[x][y] === 'hit' ||
+        this._player1.gameboard.isAllSunk()
       )
         return;
+      outputMsg.textContent = `${this._player2._name}'s turn`;
       this._board2.classList.add('blur');
       this._player1.attack(this._player2, x, y);
       this.reRenderBoard(this._player2, this._board2);
@@ -81,10 +87,12 @@ export class GameController {
 
       if (this._player2.gameboard.isAllSunk()) {
         setTimeout(() => {
-          alert(`${this._player1.name} has won`);
+          outputMsg.textContent = `${this._player1._name} has won!`;
         }, 0);
       }
     } else {
+      if (this._player2.gameboard.isAllSunk()) return;
+      outputMsg.textContent = `${this._player1._name}'s turn`;
       this._board2.classList.remove('blur');
       this._player2.attack(this._player1);
       this.reRenderBoard(this._player1, this._board1);
@@ -92,7 +100,7 @@ export class GameController {
 
       if (this._player1.gameboard.isAllSunk()) {
         setTimeout(() => {
-          alert(`${this._player2.name} has won`);
+          outputMsg.textContent = `${this._player2._name} has won!`;
         }, 0);
       }
     }

@@ -18,7 +18,7 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 120px;
-  padding-top: 150px;
+  padding-top: 50px;
 }
 
 .board1,
@@ -40,6 +40,12 @@ h1 {
   display: flex;
   justify-content: center;
   padding-top: 12px;
+}
+
+.output-msg {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
 }
 
 .ship {
