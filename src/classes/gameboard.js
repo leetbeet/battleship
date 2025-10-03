@@ -97,7 +97,55 @@ export class Gameboard {
       this._board[x][y] = 'miss';
     } else if (this._board[x][y] !== 'hit' && this._board[x][y] !== 'miss') {
       this._ships[this._board[x][y]][1].hit();
+      const ship = this._ships[this.board[x][y]][1];
       this._board[x][y] = 'hit';
+      if (ship.isSunk()) {
+        let nextX, nextY;
+        let prevX = x;
+        let prevY = y;
+        let foundNext = false;
+
+        // adjacent and diagonal cells
+        const directions = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+          [-1, -1],
+          [-1, 1],
+          [1, -1],
+          [1, 1],
+        ];
+
+        while (!foundNext) {
+          foundNext = true;
+
+          for (const [dx, dy] of directions) {
+            const nx = x + dx;
+            const ny = y + dy;
+
+            if (nx < 0 || nx > 9 || ny < 0 || ny > 9) continue; // skip invalid
+
+            if (this.board[nx][ny] === 'empty') {
+              this.board[nx][ny] = 'miss';
+            }
+
+            if (
+              this.board[nx][ny] === 'hit' &&
+              (nx !== prevX || ny !== prevY)
+            ) {
+              foundNext = false;
+              nextX = nx;
+              nextY = ny;
+            }
+          }
+
+          prevX = x;
+          prevY = y;
+          x = nextX;
+          y = nextY;
+        }
+      }
     }
   }
 
