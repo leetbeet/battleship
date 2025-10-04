@@ -1,11 +1,17 @@
 import { Player, Computer } from './player';
 
 export class GameController {
-  constructor(name, board1, board2) {
+  constructor(board1, board2, name1, name2 = null) {
     this._board1 = board1;
     this._board2 = board2;
-    this._player1 = new Player(name);
-    this._player2 = new Computer();
+    this._player1 = new Player(name1);
+    if (name2 === null) {
+      this._player2 = new Computer();
+      this._isComputer = true;
+    } else {
+      this._player2 = new Player(name2);
+      this._isComputer = false;
+    }
     this._player1Turn = true;
   }
 
@@ -19,6 +25,11 @@ export class GameController {
 
     document.querySelector('.output-msg').textContent =
       `${this._player1._name}'s turn`;
+
+    document.querySelector('.board1-caption').textContent =
+      `${this._player1._name}'s board`;
+    document.querySelector('.board2-caption').textContent =
+      `${this._player2._name}'s board`;
   }
 
   initBoards() {
@@ -36,19 +47,33 @@ export class GameController {
           if (!this._player1Turn) return;
 
           this.playTurn(i, j);
-          setTimeout(() => {
-            this.playTurn();
-          }, 300);
+          if (this._isComputer) {
+            setTimeout(() => {
+              this.playTurn();
+            }, 300);
+          }
         });
+      }
+    }
 
-        if (this._player1.gameboard.board[i][j] !== 'empty') {
-          cells1[k].className = 'ship';
+    if (!this._isComputer) {
+      for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          const k = i + j * 10;
+
+          cells1[k].addEventListener('click', () => {
+            if (this._player1Turn) return;
+
+            this.playTurn(i, j);
+          });
         }
       }
     }
+    this.reRenderBoard(this._player1, this._board1, false);
+    this.reRenderBoard(this._player2, this._board2, true);
   }
 
-  reRenderBoard(player, board, isOpponent = true) {
+  reRenderBoard(player, board, isOpponent) {
     const cells = board.children;
 
     for (let i = 0; i < 10; i++) {
@@ -58,8 +83,16 @@ export class GameController {
           case 'miss':
             cells[k].className = 'miss';
             break;
-          case 'ship':
-            if (!isOpponent) cells[k].className = 'ship';
+          case 'carrier':
+          case 'battleship':
+          case 'submarine':
+          case 'destroyer':
+          case 'patrolBoat':
+            if (!isOpponent) {
+              cells[k].className = 'ship';
+            } else {
+              cells[k].className = '';
+            }
             break;
           case 'hit':
             cells[k].className = 'hit';
@@ -71,38 +104,91 @@ export class GameController {
 
   playTurn(x = null, y = null) {
     const outputMsg = document.querySelector('.output-msg');
+
     if (this._player1Turn) {
-      if (
-        x === null ||
-        this._player2.gameboard.board[x][y] === 'miss' ||
-        this._player2.gameboard.board[x][y] === 'hit' ||
-        this._player1.gameboard.isAllSunk()
-      )
-        return;
-      outputMsg.textContent = `${this._player2._name}'s turn`;
-      this._board2.classList.add('blur');
+      if (!this.canPlayTurn(x, y, this._player1, this._player2)) return;
+
       this._player1.attack(this._player2, x, y);
-      this.reRenderBoard(this._player2, this._board2);
       this._player1Turn = false;
 
-      if (this._player2.gameboard.isAllSunk()) {
-        setTimeout(() => {
+      this.reRenderBoard(
+        this._player1,
+        this._board1,
+        this._isComputer ? false : true
+      );
+      this.reRenderBoard(this._player2, this._board2, true);
+
+      setTimeout(() => {
+        if (this._player2.gameboard.isAllSunk()) {
           outputMsg.textContent = `${this._player1._name} has won!`;
-        }, 0);
-      }
+          return;
+        }
+
+        if (this._isComputer) {
+          this._board2.classList.add('blur');
+          // computer: always show p1’s board, hide p2’s
+          outputMsg.textContent = `${this._player2._name}'s turn`;
+          setTimeout(() => this.playTurn(), 500);
+        } else {
+          // human: hide both for switch
+          this.reRenderBoard(this._player1, this._board1, true);
+          this.reRenderBoard(this._player2, this._board2, true);
+          outputMsg.textContent = 'Switch to other player';
+
+          setTimeout(() => {
+            this.reRenderBoard(this._player1, this._board1, true);
+            this.reRenderBoard(this._player2, this._board2, false);
+            outputMsg.textContent = `${this._player2._name}'s turn`;
+          }, 3000);
+        }
+      }, 0);
     } else {
       if (this._player2.gameboard.isAllSunk()) return;
-      outputMsg.textContent = `${this._player1._name}'s turn`;
-      this._board2.classList.remove('blur');
-      this._player2.attack(this._player1);
-      this.reRenderBoard(this._player1, this._board1);
+
+      if (this._isComputer) {
+        this._board2.classList.remove('blur');
+        this._player2.attack(this._player1);
+      } else {
+        if (!this.canPlayTurn(x, y, this._player2, this._player1)) return;
+        this._player2.attack(this._player1, x, y);
+      }
       this._player1Turn = true;
 
-      if (this._player1.gameboard.isAllSunk()) {
-        setTimeout(() => {
+      this.reRenderBoard(
+        this._player1,
+        this._board1,
+        this._isComputer ? false : true
+      );
+      this.reRenderBoard(this._player2, this._board2, true);
+
+      setTimeout(() => {
+        if (this._player1.gameboard.isAllSunk()) {
           outputMsg.textContent = `${this._player2._name} has won!`;
-        }, 0);
-      }
+          return;
+        }
+
+        if (this._isComputer) {
+          outputMsg.textContent = `${this._player1._name}'s turn`;
+        } else {
+          this.reRenderBoard(this._player1, this._board1, true);
+          this.reRenderBoard(this._player2, this._board2, true);
+          outputMsg.textContent = 'Switch to other player';
+
+          setTimeout(() => {
+            this.reRenderBoard(this._player1, this._board1, false);
+            this.reRenderBoard(this._player2, this._board2, true);
+            outputMsg.textContent = `${this._player1._name}'s turn`;
+          }, 3000);
+        }
+      }, 0);
     }
+  }
+
+  canPlayTurn(x, y, currentPlayer, opponent) {
+    if (x === null) return false;
+    if (currentPlayer.gameboard.isAllSunk()) return false;
+
+    const cell = opponent.gameboard.board[x][y];
+    return cell !== 'miss' && cell !== 'hit';
   }
 }
