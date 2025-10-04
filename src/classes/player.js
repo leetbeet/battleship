@@ -43,13 +43,13 @@ export class Computer extends Player {
   attack(opponent) {
     if (this._mode === 'hunt') {
       let mod;
-      if (!opponent.gameboard._ships['carrier'][1].isSunk()) {
+      if (!opponent.gameboard.ships['carrier'][1].isSunk()) {
         mod = 5;
-      } else if (!opponent.gameboard._ships['battleship'][1].isSunk()) {
+      } else if (!opponent.gameboard.ships['battleship'][1].isSunk()) {
         mod = 4;
       } else if (
-        !opponent.gameboard._ships['destroyer'][1].isSunk() ||
-        !opponent.gameboard._ships['submarine'][1].isSunk()
+        !opponent.gameboard.ships['destroyer'][1].isSunk() ||
+        !opponent.gameboard.ships['submarine'][1].isSunk()
       ) {
         mod = 3;
       } else {
@@ -75,7 +75,7 @@ export class Computer extends Player {
       if (opponent.gameboard.board[x][y] !== 'empty') {
         this._mode = 'target';
         this._shipAttacked =
-          opponent.gameboard._ships[opponent.gameboard.board[x][y]][1];
+          opponent.gameboard.ships[opponent.gameboard.board[x][y]][1];
         this._hitX = x;
         this._hitY = y;
         this._startX = this._hitX;

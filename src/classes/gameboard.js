@@ -18,6 +18,10 @@ export class Gameboard {
     return this._board;
   }
 
+  get ships() {
+    return this._ships;
+  }
+
   placeHorizontally(ship, x, y) {
     const length = this._ships[ship][0];
     if (x + length > 10) throw new Error('Ship is out of bounds.');
