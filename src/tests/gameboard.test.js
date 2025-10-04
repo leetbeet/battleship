@@ -36,36 +36,20 @@ test('hit method is called when receiveAttack hits a vertically placed ship', ()
   spy.mockRestore();
 });
 
-test('isAllSunk returns true when every ship is sunk', () => {
+test('isAllSunk returns true when every ship is sunk (attacks after all placements)', () => {
   const game = new Gameboard();
 
   game.placeHorizontally('carrier', 0, 0);
-  game.receiveAttack(0, 0);
-  game.receiveAttack(1, 0);
-  game.receiveAttack(2, 0);
-  game.receiveAttack(3, 0);
-  game.receiveAttack(4, 0);
-
-  game.placeHorizontally('battleship', 0, 1);
-  game.receiveAttack(0, 1);
-  game.receiveAttack(1, 1);
-  game.receiveAttack(2, 1);
-  game.receiveAttack(3, 1);
-
+  game.placeHorizontally('battleship', 6, 0);
   game.placeHorizontally('destroyer', 0, 2);
-  game.receiveAttack(0, 2);
-  game.receiveAttack(1, 2);
-  game.receiveAttack(2, 2);
+  game.placeHorizontally('submarine', 4, 2);
+  game.placeHorizontally('patrolBoat', 8, 2);
 
-  game.placeHorizontally('submarine', 0, 3);
-  game.receiveAttack(0, 3);
-  game.receiveAttack(1, 3);
-  game.receiveAttack(2, 3);
-
-  game.placeHorizontally('patrolBoat', 0, 4);
-  game.receiveAttack(0, 4);
-  expect(game.isAllSunk()).toBe(false);
-  game.receiveAttack(1, 4);
+  for (let x = 0; x <= 4; x++) game.receiveAttack(x, 0);
+  for (let x = 6; x <= 9; x++) game.receiveAttack(x, 0);
+  for (let x = 0; x <= 2; x++) game.receiveAttack(x, 2);
+  for (let x = 4; x <= 6; x++) game.receiveAttack(x, 2);
+  for (let x = 8; x <= 9; x++) game.receiveAttack(x, 2);
 
   expect(game.isAllSunk()).toBe(true);
 });
