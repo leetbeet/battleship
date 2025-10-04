@@ -15,8 +15,38 @@
       </div>
       <div>
         <div class="board2"></div>
-        <p class="board2-caption">Opponent board</p>
+        <p class="board2-caption"></p>
       </div>
     </div>
+
+    <dialog id="choose-mode">
+      <div class="dialog-content">
+        <h2>Choose mode</h2>
+        <button id="computer-btn">Computer</button>
+        <button id="2-player-btn">2-Player</button>
+      </div>
+    </dialog>
+
+    <dialog id="input-player1-only">
+      <div class="dialog-content">
+        <form action="#" id="input-player1-only-form">
+          <label for="name">Enter player name: </label>
+          <input type="text" id="name" name="name" required />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog id="input-players">
+      <div class="dialog-content">
+        <form action="#" id="input-players-form">
+          <label for="name1">Enter player 1 name: </label>
+          <input type="text" id="name1" name="name1" required />
+          <label for="name2">Enter player 2 name: </label>
+          <input type="text" id="name2" name="name2" required />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </dialog>
   </body>
 </html>
