@@ -23,6 +23,12 @@ window.addEventListener('DOMContentLoaded', () => {
       dialogNameInput.close();
       game.createBoards();
       game.initBoards();
+
+      // prepare Player 1 placement UI and start placement phase
+      game.showShips(0);
+      game.createBoardButtons(0);
+      game.startPlacementPhase(0);
+
       document.querySelector('.board1').style.border = '1px solid black';
       document.querySelector('.board2').style.border = '1px solid black';
     });
@@ -48,6 +54,12 @@ window.addEventListener('DOMContentLoaded', () => {
       dialogNameInput.close();
       game.createBoards();
       game.initBoards();
+
+      // start player1 placement (player2 will be started after player1 finishes)
+      game.showShips(0);
+      game.createBoardButtons(0);
+      game.startPlacementPhase(0);
+
       document.querySelector('.board1').style.border = '1px solid black';
       document.querySelector('.board2').style.border = '1px solid black';
     });

@@ -193,6 +193,7 @@ button:hover {
 }
 
 .board-btns {
+  height: 28px;
   padding-bottom: 4px;
 }
 
@@ -204,4 +205,18 @@ button:hover {
   color: white;
   cursor: pointer;
   margin-right: 3px;
+}
+
+.placement-valid {
+  background: rgba(0, 200, 0, 0.35);
+}
+.placement-invalid {
+  background: rgba(200, 0, 0, 0.35);
+}
+
+.whole-ship {
+  cursor: grab;
+}
+.whole-ship:active {
+  cursor: grabbing;
 }
