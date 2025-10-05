@@ -228,7 +228,7 @@ button:hover {
 #endgame-dialog button {
   display: flex;
   margin: 0 auto;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 #endgame-dialog h2 {
