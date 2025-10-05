@@ -50,6 +50,16 @@ export class GameController {
       for (let j = 0; j < 10; j++) {
         const k = i + j * 10;
 
+        cells2[k].addEventListener('mouseenter', () => {
+          if (this._player1Turn && cells2[k].classList.length === 0) {
+            cells2[k].classList.add('highlight');
+          }
+        });
+
+        cells2[k].addEventListener('mouseleave', () => {
+          cells2[k].classList.remove('highlight');
+        });
+
         cells2[k].addEventListener('click', () => {
           if (!this._player1Turn) return;
 
@@ -67,6 +77,16 @@ export class GameController {
       for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
           const k = i + j * 10;
+
+          cells1[k].addEventListener('mouseenter', () => {
+            if (!this._player1Turn && cells2[k].classList.length === 0) {
+              cells1[k].classList.add('highlight');
+            }
+          });
+
+          cells1[k].addEventListener('mouseleave', () => {
+            cells1[k].classList.remove('highlight');
+          });
 
           cells1[k].addEventListener('click', () => {
             if (this._player1Turn) return;
