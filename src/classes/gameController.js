@@ -33,9 +33,6 @@ export class GameController {
   }
 
   initBoards() {
-    this.showShips(1);
-    this.showShips(0);
-
     const cells1 = this._board1.children;
     const cells2 = this._board2.children;
 
@@ -219,5 +216,42 @@ export class GameController {
       destroyer,
       patrolBoat
     );
+  }
+
+  createBoardButtons(boardNum) {
+    const shipContainer = document.querySelectorAll('.ship-container');
+    const boardBtns = document.querySelectorAll('.board-btns');
+    const randomiseBtn = document.createElement('button');
+    randomiseBtn.textContent = 'Randomise';
+    const changeAxis = document.createElement('button');
+    changeAxis.textContent = 'Change axis';
+
+    randomiseBtn.addEventListener('click', () => {
+      if (boardNum === 0) {
+        this._player1.gameboard.placeAllRandomly();
+      } else {
+        this._player2.gameboard.placeAllRandomly();
+      }
+    });
+
+    changeAxis.addEventListener('click', () => {
+      const ships = shipContainer[boardNum];
+
+      const computedShips = getComputedStyle(ships);
+      const currentDir = computedShips.flexDirection;
+      const currentJustify = computedShips.justifyContent;
+
+      ships.style.flexDirection = currentDir === 'column' ? 'row' : 'column';
+      ships.style.justifyContent =
+        currentJustify === 'flex-start' ? 'center' : 'flex-start';
+
+      [...ships.children].forEach((child) => {
+        const currentChildDir = getComputedStyle(child).flexDirection;
+        child.style.flexDirection =
+          currentChildDir === 'column' ? 'row' : 'column';
+      });
+    });
+
+    boardBtns[boardNum].append(randomiseBtn, changeAxis);
   }
 }

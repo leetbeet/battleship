@@ -68,19 +68,20 @@ h1 {
 }
 
 .ship-container {
-  width: 160px;
+  width: 176px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-}
-
-.board1-buttons {
-  height: 32px;
+  margin-left: 16px;
 }
 
 .whole-ship {
   display: flex;
+}
+
+.board1-buttons {
+  height: 32px;
 }
 
 .miss {
@@ -181,12 +182,26 @@ dialog button {
   padding: 10px 16px;
   border: none;
   border-radius: 6px;
-  background-color: #202020;
+  background-color: black;
   color: white;
   font-size: 1rem;
   cursor: pointer;
 }
 
-dialog button:hover {
+button:hover {
   filter: brightness(90%);
+}
+
+.board-btns {
+  padding-bottom: 4px;
+}
+
+.board-btns button {
+  padding: 4px 5px;
+  border: none;
+  border-radius: 3px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin-right: 3px;
 }
