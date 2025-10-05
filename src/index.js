@@ -22,7 +22,6 @@ window.addEventListener('DOMContentLoaded', () => {
       );
       dialogNameInput.close();
       game.createBoards();
-      game.initBoards();
 
       // prepare Player 1 placement UI and start placement phase
       game.showShips(0);
@@ -53,7 +52,6 @@ window.addEventListener('DOMContentLoaded', () => {
       );
       dialogNameInput.close();
       game.createBoards();
-      game.initBoards();
 
       // start player1 placement (player2 will be started after player1 finishes)
       game.showShips(0);

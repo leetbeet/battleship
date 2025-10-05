@@ -490,6 +490,7 @@ export class GameController {
     if (this._isComputer) {
       if (boardNum === 0) {
         this._player2.gameboard.placeAllRandomly();
+        this.initBoards();
         this.reRenderBoard(this._player2, this._board2, true);
         outputMsg.textContent = `${this._player1._name}'s turn`;
       }
@@ -507,9 +508,13 @@ export class GameController {
         this.startPlacementPhase(1);
       }, 1000);
     } else {
-      outputMsg.textContent = `${this._player1._name}'s turn`;
-      this.reRenderBoard(this._player1, this._board1, false);
+      outputMsg.textContent = 'Switch to other player';
       this.reRenderBoard(this._player2, this._board2, true);
+      setTimeout(() => {
+        this.initBoards();
+        outputMsg.textContent = `${this._player1._name}'s turn`;
+        this.reRenderBoard(this._player1, this._board1, false);
+      }, 1000);
     }
   }
 
