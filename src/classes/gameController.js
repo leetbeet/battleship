@@ -33,8 +33,8 @@ export class GameController {
   }
 
   initBoards() {
-    this._player1.gameboard.placeAllRandomly();
-    this._player2.gameboard.placeAllRandomly();
+    this.showShips(1);
+    this.showShips(0);
 
     const cells1 = this._board1.children;
     const cells2 = this._board2.children;
@@ -190,5 +190,34 @@ export class GameController {
 
     const cell = opponent.gameboard.board[x][y];
     return cell !== 'miss' && cell !== 'hit';
+  }
+
+  showShips(boardNum) {
+    const shipContainer = document.querySelectorAll('.ship-container');
+
+    const makeShip = (length) => {
+      const ship = document.createElement('div');
+      ship.classList.add('whole-ship');
+      for (let i = 0; i < length; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('ship-cell');
+        ship.append(cell);
+      }
+      return ship;
+    };
+
+    const carrier = makeShip(5);
+    const battleship = makeShip(4);
+    const submarine = makeShip(3);
+    const destroyer = makeShip(3);
+    const patrolBoat = makeShip(2);
+
+    shipContainer[boardNum].append(
+      carrier,
+      battleship,
+      submarine,
+      destroyer,
+      patrolBoat
+    );
   }
 }

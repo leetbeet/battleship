@@ -14,11 +14,15 @@ h1 {
   padding: 12px 0;
 }
 
-.boards {
+.board-container {
   display: flex;
   justify-content: center;
-  gap: 120px;
-  padding-top: 50px;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.board-container > *:nth-child(3) {
+  margin-left: 80px;
 }
 
 .board1,
@@ -35,7 +39,7 @@ h1 {
   border: 1px solid black;
 }
 
-.boards p {
+.board-container p {
   display: flex;
   justify-content: center;
   padding-top: 12px;
@@ -45,7 +49,7 @@ h1 {
   display: flex;
   justify-content: center;
   width: fit-content;
-  margin: 100px auto 0;
+  margin: 32px auto 0;
   padding: 3px;
   background-color: #e5e5e5;
   border-radius: 4px;
@@ -54,6 +58,29 @@ h1 {
 .ship {
   border: 1px solid rgb(0, 79, 158);
   background-color: rgb(106, 160, 255);
+}
+
+.ship-cell {
+  border: 1px solid rgb(0, 79, 158);
+  background-color: rgb(106, 160, 255);
+  height: 32px;
+  width: 32px;
+}
+
+.ship-container {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.board1-buttons {
+  height: 32px;
+}
+
+.whole-ship {
+  display: flex;
 }
 
 .miss {
