@@ -220,3 +220,17 @@ button:hover {
 .whole-ship:active {
   cursor: grabbing;
 }
+
+#endgame-dialog {
+  padding: 24px 0;
+}
+
+#endgame-dialog button {
+  display: flex;
+  margin: 0 auto;
+  font-size: 24px;
+}
+
+#endgame-dialog h2 {
+  padding-bottom: 12px;
+}

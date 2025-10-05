@@ -131,6 +131,7 @@ export class GameController {
       setTimeout(() => {
         if (this._player2.gameboard.isAllSunk()) {
           outputMsg.textContent = `${this._player1._name} has won!`;
+          this.showEndGameDialog();
           return;
         }
 
@@ -172,6 +173,7 @@ export class GameController {
       setTimeout(() => {
         if (this._player1.gameboard.isAllSunk()) {
           outputMsg.textContent = `${this._player2._name} has won!`;
+          this.showEndGameDialog();
           return;
         }
 
@@ -509,5 +511,16 @@ export class GameController {
       this.reRenderBoard(this._player1, this._board1, false);
       this.reRenderBoard(this._player2, this._board2, true);
     }
+  }
+
+  showEndGameDialog() {
+    const dialog = document.getElementById('endgame-dialog');
+    dialog.showModal();
+
+    const btn = document.getElementById('play-again-btn');
+    btn.onclick = () => {
+      dialog.close();
+      window.location.reload();
+    };
   }
 }
