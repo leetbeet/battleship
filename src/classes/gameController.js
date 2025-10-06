@@ -275,6 +275,9 @@ export class GameController {
 
     randomiseBtn.addEventListener('click', () => {
       const player = boardNum === 0 ? this._player1 : this._player2;
+      player.gameboard.board.forEach((row) =>
+        row.forEach((_, j) => (row[j] = 'empty'))
+      );
       player.gameboard.placeAllRandomly();
       const boardEl = boardNum === 0 ? this._board1 : this._board2;
       this.reRenderBoard(player, boardEl, false);
