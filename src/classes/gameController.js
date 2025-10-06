@@ -79,7 +79,7 @@ export class GameController {
           const k = i + j * 10;
 
           cells1[k].addEventListener('mouseenter', () => {
-            if (!this._player1Turn && cells2[k].classList.length === 0) {
+            if (!this._player1Turn && cells1[k].classList.length === 0) {
               cells1[k].classList.add('highlight');
             }
           });
